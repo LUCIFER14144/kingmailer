@@ -1,0 +1,32 @@
+{
+  "name": "kingmailer",
+  "version": "1.0.0",
+  "description": "Integrated email marketing and inbox management platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start:email",
+    "start:email": "cd email-backend && npm start",
+    "start:inbox": "cd inbox-backend && python main.py",
+    "dev:email": "cd email-backend && npm run dev",
+    "dev:inbox": "cd inbox-backend && uvicorn main:app --reload --port 8000",
+    "install:all": "npm run install:email && npm run install:inbox",
+    "install:email": "cd email-backend && npm install",
+    "install:inbox": "cd inbox-backend && pip install -r requirements.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "email",
+    "marketing",
+    "inbox",
+    "smtp",
+    "imap",
+    "bulk-email",
+    "email-checker"
+  ],
+  "author": "LUCIFER14144",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LUCIFER14144/kingmailer.git"
+  }
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingMailer - Email Marketing & Inbox Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>👑 KingMailer</h1>
+                <p>Email Marketing & Inbox Management Platform</p>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-tab="send">📧 Send Email</button>
+                <button class="nav-btn" data-tab="inbox">📬 Check Inbox</button>
+                <button class="nav-btn" data-tab="campaigns">📊 Campaigns</button>
+                <button class="nav-btn" data-tab="settings">⚙️ Settings</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Send Email Tab -->
+            <div class="tab-content active" id="send-tab">
+                <div class="card">
+                    <h2>📧 Send Email</h2>
+                    <form id="send-email-form">
+                        <div class="form-group">
+                            <label for="from-email">From Email:</label>
+                            <input type="email" id="from-email" required placeholder="your-email@gmail.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="to-email">To Email:</label>
+                            <input type="email" id="to-email" required placeholder="recipient@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject:</label>
+                            <input type="text" id="subject" required placeholder="Email subject">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea id="message" rows="6" required placeholder="Your message here..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="html-email">
+                                Send as HTML
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Send Email</button>
+                    </form>
+                    
+                    <div id="send-result" class="result-message"></div>
+                </div>
+
+                <!-- Bulk Email Section -->
+                <div class="card">
+                    <h2>📨 Send Bulk Email</h2>
+                    <form id="bulk-email-form">
+                        <div class="form-group">
+                            <label for="bulk-from">From Email:</label>
+                            <input type="email" id="bulk-from" required placeholder="your-email@gmail.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulk-subject">Subject:</label>
+                            <input type="text" id="bulk-subject" required placeholder="Email subject">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulk-message">Message:</label>
+                            <textarea id="bulk-message" rows="6" required placeholder="Your message here..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="csv-file">Upload CSV (email list):</label>
+                            <input type="file" id="csv-file" accept=".csv" required>
+                            <small>CSV should have an 'email' column</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Send Bulk Email</button>
+                    </form>
+                    
+                    <div id="bulk-result" class="result-message"></div>
+                </div>
+            </div>
+
+            <!-- Check Inbox Tab -->
+            <div class="tab-content" id="inbox-tab">
+                <div class="card">
+                    <h2>📬 Check Inbox</h2>
+                    <p>Search for emails across all configured accounts</p>
+                    
+                    <form id="inbox-search-form">
+                        <div class="form-group">
+                            <label for="sender-email">Sender Email (optional):</label>
+                            <input type="email" id="sender-email" placeholder="sender@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="search-subject">Subject (optional):</label>
+                            <input type="text" id="search-subject" placeholder="Email subject">
+                        </div>
+                        
+                        <small>Note: At least one search criteria must be provided</small>
+                        
+                        <button type="submit" class="btn btn-primary">Search Emails</button>
+                    </form>
+                    
+                    <div id="search-status" class="search-status"></div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+
+                <!-- Configured Accounts -->
+                <div class="card">
+                    <h2>📧 Configured Email Accounts</h2>
+                    <div id="accounts-list" class="accounts-list">
+                        <p>Loading accounts...</p>
+                    </div>
+                    <button id="refresh-accounts" class="btn btn-secondary">Refresh Accounts</button>
+                </div>
+            </div>
+
+            <!-- Campaigns Tab -->
+            <div class="tab-content" id="campaigns-tab">
+                <div class="card">
+                    <h2>📊 Email Campaigns</h2>
+                    <p>Manage your email marketing campaigns</p>
+                    
+                    <div class="campaigns-grid">
+                        <div class="stat-card">
+                            <h3>Total Sent</h3>
+                            <p class="stat-number" id="total-sent">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Success Rate</h3>
+                            <p class="stat-number" id="success-rate">0%</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Active Campaigns</h3>
+                            <p class="stat-number" id="active-campaigns">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="campaigns-list">
+                        <h3>Recent Campaigns</h3>
+                        <div id="campaigns-content">
+                            <p>No campaigns yet. Start by sending your first email!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings-tab">
+                <div class="card">
+                    <h2>⚙️ Settings</h2>
+                    
+                    <div class="settings-section">
+                        <h3>Email Backend Configuration</h3>
+                        <p><strong>Status:</strong> <span id="email-backend-status" class="status-indicator">Checking...</span></p>
+                        <p><strong>URL:</strong> http://localhost:3000</p>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Inbox Backend Configuration</h3>
+                        <p><strong>Status:</strong> <span id="inbox-backend-status" class="status-indicator">Checking...</span></p>
+                        <p><strong>URL:</strong> http://localhost:8000</p>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>About KingMailer</h3>
+                        <p><strong>Version:</strong> 1.0.0</p>
+                        <p><strong>Author:</strong> LUCIFER14144</p>
+                        <p><strong>Description:</strong> Integrated email marketing and inbox management platform</p>
+                    </div>
+                    
+                    <button id="test-connection" class="btn btn-secondary">Test Connections</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 KingMailer. All rights reserved.</p>
+            <p>Created by LUCIFER14144</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
